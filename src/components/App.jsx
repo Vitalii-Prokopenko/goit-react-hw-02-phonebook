@@ -30,15 +30,8 @@ class App extends Component {
     });
   };
 
-  // handleSearchInputChange = event => {
-  //   this.handleInputChange(event);
-  //   const { contacts, filter } = this.state;
-  //   return contacts.filter(contact => contact.name.includes(filter));
-  // };
-
   render() {
     const { contacts, filter, name, number } = this.state;
-    // const filteredContacts = this.handleSearchInputChange();
     return (
       <>
         <div
@@ -98,12 +91,14 @@ class App extends Component {
           />
           <ul className={css['contactList']}>
             {contacts
-              .filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
+              .filter(contact =>
+                contact.name.toLowerCase().includes(filter.toLowerCase())
+              )
               .map(filteredContact => (
                 <li key={filteredContact.id}>
                   {filteredContact.name} {filteredContact.number}
                 </li>
-              ))}            
+              ))}
           </ul>
         </div>
       </>
