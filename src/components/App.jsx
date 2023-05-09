@@ -4,7 +4,13 @@ import css from 'components/app.module.css';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
     name: '',
     number: '',
   };
@@ -24,8 +30,15 @@ class App extends Component {
     });
   };
 
+  // handleSearchInputChange = event => {
+  //   this.handleInputChange(event);
+  //   const { contacts, filter } = this.state;
+  //   return contacts.filter(contact => contact.name.includes(filter));
+  // };
+
   render() {
-    const contacts = this.state.contacts;
+    const { contacts, filter, name, number } = this.state;
+    // const filteredContacts = this.handleSearchInputChange();
     return (
       <>
         <div
@@ -50,7 +63,7 @@ class App extends Component {
               // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
-              value={this.state.name}
+              value={name}
               onChange={this.handleInputChange}
             />
           </label>
@@ -60,10 +73,10 @@ class App extends Component {
               className={css['inputName']}
               type="tel"
               name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
-              value={this.state.number}
+              value={number}
               onChange={this.handleInputChange}
             />
           </label>
@@ -73,10 +86,24 @@ class App extends Component {
         </form>
         <div className={css['phoneBook']}>
           <p className={css['title']}>Contacts</p>
+          <p className={css['subtitle']}>Find contacts by name</p>
+          <input
+            className={css['inputSearchName']}
+            type="text"
+            name="filter"
+            // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            value={filter}
+            onChange={this.handleInputChange}
+          />
           <ul className={css['contactList']}>
-            {contacts.map(contact => {
-              return <li key={contact.id}>{contact.name} {contact.number}</li>;
-            })}
+            {contacts
+              .filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
+              .map(filteredContact => (
+                <li key={filteredContact.id}>
+                  {filteredContact.name} {filteredContact.number}
+                </li>
+              ))}            
           </ul>
         </div>
       </>
