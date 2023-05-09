@@ -6,18 +6,19 @@ class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
   handleInputChange = event => {
     this.setState({
-      name: event.currentTarget.value,
+      [event.currentTarget.name]: event.currentTarget.value,
     });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    const { contacts, name } = this.state;
-    contacts.push({ id: nanoid(), name: name });
+    const { contacts, name, number } = this.state;
+    contacts.push({ id: nanoid(), name: name, number: number });
     this.setState({
       contacts: contacts,
     });
@@ -53,6 +54,19 @@ class App extends Component {
               onChange={this.handleInputChange}
             />
           </label>
+          <label className={css['labelName']}>
+            Number
+            <input
+              className={css['inputName']}
+              type="tel"
+              name="number"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              required
+              value={this.state.number}
+              onChange={this.handleInputChange}
+            />
+          </label>
           <button className={css['btnSubmit']} type="submit">
             Add contact
           </button>
@@ -61,7 +75,7 @@ class App extends Component {
           <p className={css['title']}>Contacts</p>
           <ul className={css['contactList']}>
             {contacts.map(contact => {
-              return <li key={contact.id}>{contact.name}</li>;
+              return <li key={contact.id}>{contact.name} {contact.number}</li>;
             })}
           </ul>
         </div>
