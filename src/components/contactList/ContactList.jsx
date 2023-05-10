@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import Item from '../item/Item';
 import css from 'components/contactList/contact-list.module.css';
 
-const ContactList = ({ contacts, filter }) => (
+const ContactList = ({ contacts, filter, handleContactDelete }) => (
   <ul className={css['contactList']}>
-    <Item contacts={contacts} filter={filter} />
+    <Item
+      contacts={contacts}
+      filter={filter}
+      handleContactDelete={handleContactDelete}
+    />
   </ul>
 );
 
@@ -20,4 +24,5 @@ ContactList.propTypes = {
     })
   ),
   filter: PropTypes.string.isRequired,
+  handleContactDelete: PropTypes.func.isRequired,
 };

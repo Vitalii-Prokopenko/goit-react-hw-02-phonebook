@@ -27,10 +27,22 @@ class App extends Component {
     const { contacts } = this.state;
     const names = contacts.map(contact => contact.name);
     console.log(names);
-if (names.includes(name)) {
-  return alert(`${name} is already in contacts`)
-}
+    if (names.includes(name)) {
+      return alert(`${name} is already in contacts`);
+    }
     contacts.push({ id: nanoid(), name: name, number: number });
+    this.setState({
+      contacts: contacts,
+    });
+  };
+
+  handleContactDelete = event => {
+    const { contacts } = this.state;
+    const { name } = event.currentTarget;
+    const contactToDeleteIndex = contacts.findIndex(
+      contact => contact.id === name
+    );
+    contacts.splice(contactToDeleteIndex, 1);
     this.setState({
       contacts: contacts,
     });
@@ -61,7 +73,11 @@ if (names.includes(name)) {
               filter={filter}
               handleInputChange={this.handleInputChange}
             />
-            <ContactList contacts={contacts} filter={filter} />
+            <ContactList
+              contacts={contacts}
+              filter={filter}
+              handleContactDelete={this.handleContactDelete}
+            />
           </div>
         </div>
       </>
