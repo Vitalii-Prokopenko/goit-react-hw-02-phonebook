@@ -1,4 +1,39 @@
-.form {
+.phoneBook {
+  margin: 0 auto;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 600px;
+  height: auto;
+  border: 1px solid #777;
+  
+}
+
+.phoneBook-title {
+  font-size: 70px;
+  font-weight: 900;
+}
+
+.phoneBook-wrap {
+  margin: 0 auto 20px;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  height: auto;
+  border: 1px solid #777;
+  background-color: gray;
+}
+
+.title {
+  margin: 0 auto;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+/* .form {
   margin: 0 auto 20px;
   padding: 20px 40px;
   width: 500px;
@@ -44,7 +79,7 @@
   color: white;
 }
 
-.phoneBook {
+.phoneBook-wrap {
   margin: 0 auto;
   padding: 20px 40px;
   width: 500px;
@@ -68,4 +103,4 @@
 .contactList {
   font-size: 30px;
   font-weight: 400;
-}
+} */

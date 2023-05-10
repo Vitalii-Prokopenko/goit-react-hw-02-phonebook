@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import css from 'components/app.module.css';
+import ContactList from './contactList/ContactList';
+import Filter from './filter/Filter';
+import Form from './form/Form';
 
 class App extends Component {
   state = {
@@ -11,8 +14,6 @@ class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
   handleInputChange = event => {
@@ -21,9 +22,9 @@ class App extends Component {
     });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    const { contacts, name, number } = this.state;
+  formSubmitHandler = data => {
+    const { name, number } = data;
+    const { contacts } = this.state;
     contacts.push({ id: nanoid(), name: name, number: number });
     this.setState({
       contacts: contacts,
@@ -31,7 +32,7 @@ class App extends Component {
   };
 
   render() {
-    const { contacts, filter, name, number } = this.state;
+    const { contacts, filter } = this.state;
     return (
       <>
         <div
@@ -46,60 +47,17 @@ class App extends Component {
         >
           React homework template
         </div>
-        <form className={css['form']} onSubmit={this.handleSubmit}>
-          <label className={css['labelName']}>
-            Name
-            <input
-              className={css['inputName']}
-              type="text"
-              name="name"
-              // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              value={name}
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <label className={css['labelName']}>
-            Number
-            <input
-              className={css['inputName']}
-              type="tel"
-              name="number"
-              // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              value={number}
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <button className={css['btnSubmit']} type="submit">
-            Add contact
-          </button>
-        </form>
         <div className={css['phoneBook']}>
-          <p className={css['title']}>Contacts</p>
-          <p className={css['subtitle']}>Find contacts by name</p>
-          <input
-            className={css['inputSearchName']}
-            type="text"
-            name="filter"
-            // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            value={filter}
-            onChange={this.handleInputChange}
-          />
-          <ul className={css['contactList']}>
-            {contacts
-              .filter(contact =>
-                contact.name.toLowerCase().includes(filter.toLowerCase())
-              )
-              .map(filteredContact => (
-                <li key={filteredContact.id}>
-                  {filteredContact.name} {filteredContact.number}
-                </li>
-              ))}
-          </ul>
+          <h1 className={css['phoneBook-title']}>Phonebook</h1>
+          <Form onSubmit={this.formSubmitHandler} />
+          <div className={css['phoneBook-wrap']}>
+            <h2 className={css['title']}>Contacts</h2>
+            <Filter
+              filter={filter}
+              handleInputChange={this.handleInputChange}
+            />
+            <ContactList contacts={contacts} filter={filter} />
+          </div>
         </div>
       </>
     );

@@ -1,18 +1,11 @@
 // List of contacts
 import PropTypes from 'prop-types';
+import Item from '../item/Item';
 import css from 'components/contactList/contact-list.module.css';
 
 const ContactList = ({ contacts, filter }) => (
   <ul className={css['contactList']}>
-    {contacts
-      .filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
-      .map(filteredContact => (
-        <li key={filteredContact.id}>
-          {filteredContact.name} {filteredContact.number}
-        </li>
-      ))}
+    <Item contacts={contacts} filter={filter} />
   </ul>
 );
 
