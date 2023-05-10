@@ -25,6 +25,11 @@ class App extends Component {
   formSubmitHandler = data => {
     const { name, number } = data;
     const { contacts } = this.state;
+    const names = contacts.map(contact => contact.name);
+    console.log(names);
+if (names.includes(name)) {
+  return alert(`${name} is already in contacts`)
+}
     contacts.push({ id: nanoid(), name: name, number: number });
     this.setState({
       contacts: contacts,
