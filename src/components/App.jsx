@@ -34,28 +34,20 @@ class App extends Component {
       id: nanoid(),
       name: name,
       number: number,
-    }
+    };
     this.setState(prevState => {
       return {
-        [contacts]: prevState.contacts.push(newContact),
+        contacts: [...prevState.contacts, newContact],
       };
     });
   };
 
   handleContactDelete = id => {
-    console.log(id);
-    const { contacts } = this.state;
-    console.log(contacts);
-    const contactToDeleteIndex = contacts.findIndex(
-      contact => contact.id === id
-    );
     this.setState(prevState => {
       return {
-        [contacts]: prevState.contacts.splice(contactToDeleteIndex, 1),
-        // [contacts]: prevState.contacts.filter(contact => contact.id !== id),
+        contacts: prevState.contacts.filter(contact => contact.id !== id),
       };
     });
-    console.log(this.state.contacts)
   };
 
   render() {

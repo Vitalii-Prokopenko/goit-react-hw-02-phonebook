@@ -15,31 +15,12 @@ const Item = ({ contact, handleContactDelete }) => (
         Delete
       </button>
     </li>
-
-    {/* {contacts
-      .filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
-      .map(filteredContact => (
-        <li key={filteredContact.id} className={css['contact-item']}>
-          {filteredContact.name} {filteredContact.number}
-          <button
-            className={css['btnDelete']}
-            type="button"
-            onClick={handleContactDelete}
-            name={filteredContact.id}
-          >
-            Delete
-          </button>
-        </li>
-      ))} */}
   </>
 );
 
 export default Item;
 
 Item.propTypes = {
- 
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -47,6 +28,5 @@ Item.propTypes = {
       number: PropTypes.string.isRequired,
     })
   ),
-  // filter: PropTypes.string.isRequired,
   handleContactDelete: PropTypes.func.isRequired,
 };

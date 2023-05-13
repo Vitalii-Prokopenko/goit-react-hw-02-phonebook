@@ -11,25 +11,7 @@ const ContactList = ({ contacts, handleContactDelete }) => (
         contact={contact}
         handleContactDelete={handleContactDelete}
       />
-
-      // <li key={contact.id} className={css['contact-item']}>
-      //   {contact.name} {contact.number}
-      //   <button
-      //     className={css['btnDelete']}
-      //     type="button"
-      //     onClick={() => {handleContactDelete(contact.id)}}
-      //     name={filteredContact.id}
-      //   >
-      //     Delete
-      //   </button>
-      // </li>
     ))}
-
-    {/* <Item
-      contacts={contacts}
-      filter={filter}
-      handleContactDelete={handleContactDelete}
-    /> */}
   </ul>
 );
 

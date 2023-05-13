@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import css from 'components/form/form.module.css';
 
+const INITIAL_STATE = {
+  name: '',
+  number: '',
+};
+
 class Form extends Component {
-  state = {    
+  state = {
     name: '',
     number: '',
   };
 
+  reset = () => {
+    this.setState({ ...INITIAL_STATE });
+  };
+
   handleInputChange = event => {
-    const {name, value} = event.currentTarget;
+    const { name, value } = event.currentTarget;
     this.setState({
       [name]: value,
     });
@@ -16,7 +25,8 @@ class Form extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.onSubmit(this.state);    
+    this.props.onSubmit(this.state);
+    this.reset();
   };
 
   render() {
