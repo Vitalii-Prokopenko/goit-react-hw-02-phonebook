@@ -3,13 +3,33 @@ import PropTypes from 'prop-types';
 import Item from '../item/Item';
 import css from 'components/contactList/contact-list.module.css';
 
-const ContactList = ({ contacts, filter, handleContactDelete }) => (
+const ContactList = ({ contacts, handleContactDelete }) => (
   <ul className={css['contactList']}>
-    <Item
+    {contacts.map(contact => (
+      <Item
+        key={contact.id}
+        contact={contact}
+        handleContactDelete={handleContactDelete}
+      />
+
+      // <li key={contact.id} className={css['contact-item']}>
+      //   {contact.name} {contact.number}
+      //   <button
+      //     className={css['btnDelete']}
+      //     type="button"
+      //     onClick={() => {handleContactDelete(contact.id)}}
+      //     name={filteredContact.id}
+      //   >
+      //     Delete
+      //   </button>
+      // </li>
+    ))}
+
+    {/* <Item
       contacts={contacts}
       filter={filter}
       handleContactDelete={handleContactDelete}
-    />
+    /> */}
   </ul>
 );
 
@@ -23,6 +43,5 @@ ContactList.propTypes = {
       number: PropTypes.string.isRequired,
     })
   ),
-  filter: PropTypes.string.isRequired,
   handleContactDelete: PropTypes.func.isRequired,
 };

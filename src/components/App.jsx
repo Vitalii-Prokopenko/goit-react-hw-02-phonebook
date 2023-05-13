@@ -16,40 +16,53 @@ class App extends Component {
     filter: '',
   };
 
-  handleInputChange = event => {
+  handleInputFilter = event => {
+    const { name, value } = event.currentTarget;
     this.setState({
-      [event.currentTarget.name]: event.currentTarget.value,
+      [name]: value,
     });
   };
 
   formSubmitHandler = data => {
     const { name, number } = data;
     const { contacts } = this.state;
-    const names = contacts.map(contact => contact.name);
-    console.log(names);
-    if (names.includes(name)) {
+    const isExist = contacts.find(contact => contact.name === name);
+    if (isExist) {
       return alert(`${name} is already in contacts`);
     }
-    contacts.push({ id: nanoid(), name: name, number: number });
-    this.setState({
-      contacts: contacts,
+    const newContact = {
+      id: nanoid(),
+      name: name,
+      number: number,
+    }
+    this.setState(prevState => {
+      return {
+        [contacts]: prevState.contacts.push(newContact),
+      };
     });
   };
 
-  handleContactDelete = event => {
+  handleContactDelete = id => {
+    console.log(id);
     const { contacts } = this.state;
-    const { name } = event.currentTarget;
+    console.log(contacts);
     const contactToDeleteIndex = contacts.findIndex(
-      contact => contact.id === name
+      contact => contact.id === id
     );
-    contacts.splice(contactToDeleteIndex, 1);
-    this.setState({
-      contacts: contacts,
+    this.setState(prevState => {
+      return {
+        [contacts]: prevState.contacts.splice(contactToDeleteIndex, 1),
+        // [contacts]: prevState.contacts.filter(contact => contact.id !== id),
+      };
     });
+    console.log(this.state.contacts)
   };
 
   render() {
     const { contacts, filter } = this.state;
+    const filteredContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
     return (
       <>
         <div
@@ -69,13 +82,13 @@ class App extends Component {
           <Form onSubmit={this.formSubmitHandler} />
           <div className={css['phoneBook-wrap']}>
             <h2 className={css['title']}>Contacts</h2>
+
             <Filter
               filter={filter}
-              handleInputChange={this.handleInputChange}
+              handleInputFilter={this.handleInputFilter}
             />
             <ContactList
-              contacts={contacts}
-              filter={filter}
+              contacts={filteredContacts}
               handleContactDelete={this.handleContactDelete}
             />
           </div>

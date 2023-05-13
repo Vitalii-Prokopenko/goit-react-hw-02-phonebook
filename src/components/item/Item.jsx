@@ -2,9 +2,21 @@
 import PropTypes from 'prop-types';
 import css from 'components/item/item.module.css';
 
-const Item = ({ contacts, filter, handleContactDelete }) => (
+const Item = ({ contact, handleContactDelete }) => (
   <>
-    {contacts
+    <li key={contact.id} className={css['contact-item']}>
+      {contact.name} {contact.number}
+      <button
+        className={css['btnDelete']}
+        type="button"
+        onClick={() => handleContactDelete(contact.id)}
+        name={contact.id}
+      >
+        Delete
+      </button>
+    </li>
+
+    {/* {contacts
       .filter(contact =>
         contact.name.toLowerCase().includes(filter.toLowerCase())
       )
@@ -20,13 +32,14 @@ const Item = ({ contacts, filter, handleContactDelete }) => (
             Delete
           </button>
         </li>
-      ))}
+      ))} */}
   </>
 );
 
 export default Item;
 
 Item.propTypes = {
+ 
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -34,6 +47,6 @@ Item.propTypes = {
       number: PropTypes.string.isRequired,
     })
   ),
-  filter: PropTypes.string.isRequired,
+  // filter: PropTypes.string.isRequired,
   handleContactDelete: PropTypes.func.isRequired,
 };
